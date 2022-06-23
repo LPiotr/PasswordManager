@@ -20,6 +20,7 @@ namespace PasswordManager
         private void button1_Click(object sender, EventArgs e)
         {
             ValidatePassword(textBox2.Text);
+            MessageBox.Show("Dodano nowy rekord w bazie");
         }
 
         bool ValidatePassword(string password)
@@ -70,7 +71,5 @@ namespace PasswordManager
                         ;
             return isValid;
         }
-
-
-}
+    }
 }
