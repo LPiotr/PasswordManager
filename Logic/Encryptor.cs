@@ -34,14 +34,10 @@ namespace PasswordManager.Logic
         // implementacja metody kasującej stary plik z solą
 
         private byte[] HashPassword(string password, byte[] salt)
-        {
-            
+        {            
             var argon2id = new Argon2id(Encoding.UTF8.GetBytes(password));
 
-
-            argon2id.Salt = salt;
-            
-
+            argon2id.Salt = salt;            
             argon2id.DegreeOfParallelism = 4;
             argon2id.Iterations = 4;
             argon2id.MemorySize = 1024 * 1024; //1GB
@@ -57,16 +53,12 @@ namespace PasswordManager.Logic
         {
             var salt = CreateSalt();
             var hash = HashPassword(password, salt);
-            
+           
             var success = VerifyHash(password, salt, hash);
             File.WriteAllBytes("hash.txt", hash);
+            
             return hash;
             
         }
-
-    //public byte[] Decrypt(string password)
-    //    {
-            
-    //    }
     }
 }
