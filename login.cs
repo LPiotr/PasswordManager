@@ -22,10 +22,5 @@ namespace PasswordManager
             Register register = new Register();
             register.ShowDialog();
         }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

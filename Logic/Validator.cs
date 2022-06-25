@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PasswordManager.Logic
 {
@@ -29,13 +24,13 @@ namespace PasswordManager.Logic
             {
                 foreach (char c in password)
                 {
-                    if (char.IsUpper(c)) hasUpperCaseLetter = true;
-                    else if (char.IsLower(c)) hasLowerCaseLetter = true;
-                    else if (char.IsDigit(c)) hasDecimalDigit = true;
+                    if (char.IsUpper(c)) { hasUpperCaseLetter = true; }
+                    else if (char.IsLower(c)) { hasLowerCaseLetter = true; }
+                    else if (char.IsDigit(c)) { hasDecimalDigit = true; }
                 }
-                if (password.Equals(confirmPassword)) passwordsAreSame = true;
+                if (password.Equals(confirmPassword)) { passwordsAreSame = true; }
 
-               // if (blacklistedPassword == false) passwordIsNotOnBlackList = true;
+               // jesli (blacklistedPassword == falsz) passwordIsNotOnBlackList = prawda;
             }
 
             bool isValid = meetsLengthRequirements
