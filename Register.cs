@@ -33,7 +33,7 @@ namespace PasswordManager
             {
                 //encrypt password
                 var encryptobj = new EncryptorAndDecryptor();
-                var hashToSave = encryptobj.Enrypt(textBox2.Text);
+                var hashToSave = encryptobj.Enrypt(textBox2.Text, null);
 
                 //string to save
                 string newContent = textBox1.Text + "|" + Encoding.Default.GetString(hashToSave)+"|"

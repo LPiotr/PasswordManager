@@ -36,7 +36,7 @@ namespace PasswordManager.Logic
             var argon2id = new Argon2id(Encoding.UTF8.GetBytes(password));
 
             argon2id.Salt = salt;            
-            argon2id.DegreeOfParallelism = 4;
+            argon2id.DegreeOfParallelism = 8;
             argon2id.Iterations = 4;
             argon2id.MemorySize = 1024 * 1024; //1GB
 
@@ -45,18 +45,31 @@ namespace PasswordManager.Logic
     private bool VerifyHash(string password, byte[] salt, byte[] hash)
         {
             var newHash = HashPassword(password, salt);
-            return hash.SequenceEqual(newHash);
+            if (hash != null)
+            {
+                return hash.SequenceEqual(newHash);
+            }
+            return true;
         }
-    public byte[] Enrypt(string password)
+
+    public byte[] Enrypt(string password, byte[] hashedPassword)
         {
-            var salt = CreateSalt();
-            var hash = HashPassword(password, salt);
-           
-            var success = VerifyHash(password, salt, hash);
-            File.WriteAllBytes("hash.txt", hash);
-            
-            return hash;
-            
+            if (hashedPassword != null)
+            {
+                var salt = CreateSalt();
+                var hash = HashPassword(password, salt);
+                var success = VerifyHash(password, salt, hashedPassword);
+                return hash;
+
+            }
+            if (hashedPassword == null)
+            {
+                var salt = CreateSalt();
+                var hash = HashPassword(password, salt);
+                var success = VerifyHash(password, salt, hashedPassword);
+                return hash;  
+             }
+            return null;
         }
 
     public void checkLoginAndPassword (string login, string password)
