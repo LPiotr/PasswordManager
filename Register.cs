@@ -1,13 +1,7 @@
 ﻿using PasswordManager.Logic;
 using System;
-using System.Collections.Generic;
-//using System.ComponentModel;
-//using System.Data;
-//using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -22,6 +16,9 @@ namespace PasswordManager
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //user validation
+            // to be implemented
+
             //password validation
             var validator = new Validator();
             bool isPasswordMatch = validator.ValidatePassword(textBox1.Text, textBox2.Text, textBox3.Text, true);
@@ -41,13 +38,13 @@ namespace PasswordManager
                 //string to save
                 string newContent = textBox1.Text + "|" + Encoding.Default.GetString(hashToSave)+"|"
                     + Convert.ToString(DateTime.Now) + Environment.NewLine;
-
+                
                 //save to file
-                File.AppendAllText("database.txt", newContent, Encoding.Unicode);
+                File.AppendAllText("database.txt", newContent, Encoding.UTF8);
+                MessageBox.Show("nowy login i hasło zostało dodane!");
+                //close register form
+                Close();
             }
-            //generate password hash
-            //save to file
-            //clear and close register form
         }
     }
 }

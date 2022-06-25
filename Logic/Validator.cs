@@ -14,13 +14,6 @@ namespace PasswordManager.Logic
             const int MIN_LENGTH = 8;
             const int MAX_LENGTH = 15;
 
-            /*
-            if (toRegister = false)
-            {
-
-            }
-            */
-
             if (password == null) throw new ArgumentNullException();
 
             bool meetsLengthRequirements = password.Length >= MIN_LENGTH && password.Length <= MAX_LENGTH;
@@ -30,13 +23,8 @@ namespace PasswordManager.Logic
             bool passwordsAreSame = false;
             bool passwordIsNotOnBlackList = true;
 
-
-            //string dictionaryPath = @"C:\Users\Piotr\Documents\STUDIA AHE 2022\Ochrona danych -projekt\PasswordManager\Polish.dic";
-
-            //List<string> simplePasswords = File.ReadAllLines(dictionaryPath).ToList();
-            //C:\Users\Piotr\Documents\STUDIA AHE 2022\Ochrona danych - projekt\PasswordManager\
-           // bool blacklistedPassword = simplePasswords.Equals(password);
-
+            //słowniki
+            
             if (meetsLengthRequirements)
             {
                 foreach (char c in password)

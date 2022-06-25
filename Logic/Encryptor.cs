@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
 using Konscious.Security.Cryptography;
 using System.IO;
@@ -67,14 +65,11 @@ namespace PasswordManager.Logic
             bool passwordIsMatch;
             byte[] hashedPassoword;
 
-            
-
             int counter = 0;
             string line;
             var text = Console.ReadLine();
 
-            System.IO.StreamReader file =
-                new System.IO.StreamReader("database.txt");
+            StreamReader file = new StreamReader("database.txt");
 
             while ((line = file.ReadLine()) != null)
             {
@@ -84,22 +79,11 @@ namespace PasswordManager.Logic
                 }
                 counter++;
             }
-
             
-
             file.Close();
 
-
-
-            var salt = CreateSalt();
-
-
+            //var salt = CreateSalt();
             //VerifyHash(password, salt, hashedPassoword);
-
-
         }
-
-
-
     }
 }
