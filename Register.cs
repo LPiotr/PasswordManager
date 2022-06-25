@@ -1,12 +1,15 @@
-﻿using System;
+﻿using PasswordManager.Logic;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+//using System.ComponentModel;
+//using System.Data;
+//using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace PasswordManager
 {
@@ -19,57 +22,32 @@ namespace PasswordManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ValidatePassword(textBox2.Text);
-            MessageBox.Show("Dodano nowy rekord w bazie");
-        }
+            //password validation
+            var validator = new Validator();
+            bool isPasswordMatch = validator.ValidatePassword(textBox1.Text, textBox2.Text, textBox3.Text, true);
 
-        bool ValidatePassword(string password)
-        {
-            const int MIN_LENGTH = 8;
-            const int MAX_LENGTH = 15;
-
-            if (password == null) throw new ArgumentNullException();
-
-            bool meetsLengthRequirements = password.Length >= MIN_LENGTH && password.Length <= MAX_LENGTH;
-            bool hasUpperCaseLetter = false;
-            bool hasLowerCaseLetter = false;
-            bool hasDecimalDigit = false;
-            bool passwordsAreSame = false;
-            bool passwordIsNotOnBlackList = false;
-
-            List<string> simplePasswords = new List<string>();
+            if (isPasswordMatch != true)
             {
-                // lista do zmigrowania do resourses
-                // DO POPRAWY LOGIKA SPRAWDZANIA LISTY NIEDOZWOLONYCH HASEL
-                //TAKE SAME HASŁA TEŻ DO POPRAWKI
-                simplePasswords.Add("12345678");
-                simplePasswords.Add("1234");
-                simplePasswords.Add("password");
-                simplePasswords.Add("has\u0142" + "o1234");
+                label2.Text = "";
+                label2.Text = "";
+                MessageBox.Show("HASŁA NIE ZGADZAJĄ SIĘ - POPRAW!");
             }
-            bool blacklistedPassword = simplePasswords.Equals(password);
-
-            if (meetsLengthRequirements)
+            else
             {
-                foreach (char c in password)
-                {
-                    if (char.IsUpper(c)) hasUpperCaseLetter = true;
-                    else if (char.IsLower(c)) hasLowerCaseLetter = true;
-                    else if (char.IsDigit(c)) hasDecimalDigit = true;
-                }
+                //encrypt password
+                var encryptobj = new EncryptorAndDecryptor();
+                var hashToSave = encryptobj.Enrypt(textBox2.Text);
 
-                if (blacklistedPassword == false) passwordIsNotOnBlackList = true;
-                else if (password.Equals(textBox3.Text)) passwordsAreSame = true;
+                //string to save
+                string newContent = textBox1.Text + "|" + Encoding.Default.GetString(hashToSave)+"|"
+                    + Convert.ToString(DateTime.Now) + Environment.NewLine;
+
+                //save to file
+                File.AppendAllText("database.txt", newContent, Encoding.Unicode);
             }
-
-            bool isValid = meetsLengthRequirements
-                        && hasUpperCaseLetter
-                        && hasLowerCaseLetter
-                        && hasDecimalDigit
-                        && passwordsAreSame
-                        && passwordIsNotOnBlackList;
-                        ;
-            return isValid;
+            //generate password hash
+            //save to file
+            //clear and close register form
         }
     }
 }

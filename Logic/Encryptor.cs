@@ -60,5 +60,46 @@ namespace PasswordManager.Logic
             return hash;
             
         }
+
+    public void checkLoginAndPassword (string login, string password)
+        {
+            bool loginExists;
+            bool passwordIsMatch;
+            byte[] hashedPassoword;
+
+            
+
+            int counter = 0;
+            string line;
+            var text = Console.ReadLine();
+
+            System.IO.StreamReader file =
+                new System.IO.StreamReader("database.txt");
+
+            while ((line = file.ReadLine()) != null)
+            {
+                if (line.Contains(login))
+                {
+                    break;
+                }
+                counter++;
+            }
+
+            
+
+            file.Close();
+
+
+
+            var salt = CreateSalt();
+
+
+            //VerifyHash(password, salt, hashedPassoword);
+
+
+        }
+
+
+
     }
 }
